@@ -1,0 +1,17 @@
+
+Merge back changes in Morten PhD/IST_V2/spacetime.sty (to support dimline and justdots etc)
+(Consider if these functions should be kept in a separate package or be part of the same.)
+
+Add support for more interval lines in one diagram. (check what can be done with the dimline)
+
+Support timeout.
+
+Support false detection (i.e. without crash symbol)
+- use dashed lines?
+
+Support for finer granularity of x shifting.
+
+Fix support for fixed width messages.
+
+Refactor the complicated function for drawing the timelines and stuff.
+

@@ -1,0 +1,19 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\stdset{exec box color=blue!30}
+	\input{slidefig/2c2s-noleader} % two clients, two servers
+	\input{slidefig/2s-msgpattern} % two server msg pattern
+
+	\execbox{/srv1}{/srv2}{$m_2$}{-0.4}
+	\msgx[label pos=lower]{/srv1}{/clt2}{\rep{\state{2}{1}}}{.2}
+	\msgx[label pos=lower]{/srv2}{/clt2}{\rep{\state{2}{2}}}{-.1}
+	\advancetime
+	\execbox{/srv1}{/srv2}{$m_1$}{.2}
+	\msgx{/srv1}{/clt1}{\rep{\state{21}{1}}}{.5}
+	\msgx{/srv2}{/clt1}{\rep{\state{21}{2}}}{.9}
+	\advancetime[2]
+	\drawtimelines
+
+% \caption{\label{a1-desired}Our desired outcome is that clients observe the same replies from all servers in response to a request.}
+% \caption{\label{a1-desired}This diagram shows our desired outcome, where clients see the same replies from all servers in response to a command. To obtain this, the two servers must communicate with each other to order the commands. At this stage we don't know what communication is necessary, so we simply hide the communication inside the two execution boxes stretching over both servers.}
+

@@ -1,0 +1,39 @@
+%!TEX root = ../paxos-tutorial.tex
+
+%SOLUTION 1: 
+% Let's use one server as leader.
+% Let it tell the other server what to execute. 
+% The leader sends an Accept message to the other server
+%
+%REDUCTION: Remove the client messages
+%PROBLEM:
+% It can happen that the leader's message is delayed
+% and the order at the two servers become different.
+%SOLUTION 2:
+% Add sequence numbers and don't execute unless messages
+% arrive in sequence number order.
+%NOTE:
+% If we had a buffer we could also deliver m_1 after m_2
+%
+%READDED THE CLIENT MESSAGES
+
+	\input{slidefig/2c2s} % two clients, two servers
+	\input{slidefig/2s-msgpattern} % two server msg pattern
+
+	% \msgx{/srv1}{/srv2}{\acc{m_2,1}}{0}
+	\msgx[width=4,controls={0,-1}{0,1}]{/srv1}{/srv2}{\acc{m_2},1}{0}
+	\advancetime
+	\execbox{/srv2}{/srv2}{$m_2$}{3.4}
+	\execbox{/srv1}{/srv1}{$m_2$}{0}
+	\msgx[label pos=lower]{/srv1}{/clt2}{\rep{\state{2}{1}}}{0.3}
+	\msgx[label pos=lower]{/srv2}{/clt2}{\rep{\state{2}{2}}}{3.7}
+	\advancetime
+	\msgx{/srv1}{/srv2}{\acc{m_1,2}}{.2}
+	\execbox{/srv1}{/srv1}{$m_1$}{1.2}
+	\advancetime
+	\msgx{/srv1}{/clt1}{\rep{\state{21}{1}}}{.5}
+	\advancetime[2]
+	\drawtimelines
+
+% \caption{\label{a2-problem}Problem: Message \ev{\acc{m_1,2}} is lost, and \srv{2} gets stuck and cannot proceed with processing more messages, even if it got more accept messages for higher sequence numbers.}
+% \caption{\label{a2-problem}Problem: Message \ev{\acc{m_1,2}} is lost and \srv{2} gets stuck.}

@@ -1,0 +1,29 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\stdset{partition line offset=1.3}
+	\input{slidefig/2c3s1p}
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+	% Hack to avoid height difference between slides
+	\txt[label font=\normalsize,label pos=above]{/clt1}{\color{white}\ev{\state{1}{3}}}
+	\txt[label font=\normalsize,label pos=below]{/clt2}{\color{white}\ev{\state{2}{3}}}
+
+	\advancetime
+	\markintervalstart{/srv2}
+	\advancetime[2]
+	\drawinterval[pos=above,offset=0.4]{/srv2}{}{Timeout}
+	\msgx{/srv2}{/srv3}{\prep{\srv2}}{0.8}
+	\advancetime
+	\msgx[label pos=lower]{/srv3}{/srv2}{\prom{\srv2}}{0.8}
+	\advancetime
+
+	\newleader[0.5]{/srv2}
+	\advancetime
+	\merge{/partition}
+	\advancetime
+	\fail{/srv2}
+	\advancetime[2]
+
+	\advancetime[2]
+	\drawtimelines

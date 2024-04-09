@@ -1,0 +1,23 @@
+%!TEX root = ../paxos-tutorial.tex
+
+% Three servers and two clients
+
+\def\ma{0.4}
+\def\mb{0.2}
+
+	\msgx[width=.5]{/clt1}{/srv1}{\req{m_1}}{\ma}
+	\msgx[width=.7]{/clt1}{/srv2}{}{\ma}
+	\msgx[width=.6]{/clt1}{/srv3}{}{\ma}
+	\msgx[width=.2]{/clt2}{/srv1}{}{\mb}
+	\msgx[width=.4]{/clt2}{/srv2}{}{\mb}
+	\msgx[width=.6,label pos=lower]{/clt2}{/srv3}{\req{m_2}}{\mb}
+	\advancetime
+
+	% \advancetime
+	% \msgx[width=1]{/clt1}{/srv1}{\req{m_1}}{-.2}
+	% \msgx[width=0.9]{/clt1}{/srv2}{}{-.2}
+	% \msgx[width=0.6]{/clt1}{/srv3}{}{-.2}
+	% \advancetime
+	% \msgx[width=0.3]{/clt2}{/srv1}{}{-1.6}
+	% \msgx[width=0.6]{/clt2}{/srv2}{}{-1.6}
+	% \msgx[width=1.2,label pos=lower]{/clt2}{/srv3}{\req{m_2}}{-1.6}

@@ -1,0 +1,56 @@
+%!TEX root = ./main.tex
+% TODO: Clean up the content herein; I may remove some of the commands
+
+\newtheorem{observation}{Observation}
+
+% Font size used in tikz/pgf figures
+\newcommand{\mysize}{\scriptsize}
+% Font color used in algorithms to illustrate optimization code 
+% (not necessary for correctness)
+\definecolor{mygrey}{gray}{0.75}
+
+\renewcommand{\algorithmicdo}{}
+\renewcommand{\algorithmicupon}{\textbf{on}}
+\renewcommand{\algorithmiccomment}[1]{\hfill\small{\{#1\}}\normalsize{}\\}
+
+\newcommand{\event}[1]{\ensuremath{\langle\normalfont\textsc{#1}\rangle}}
+\newcommand{\eventp}[2]{\ensuremath{\langle\normalfont\textsc{#1}, #2\rangle}}
+\newcommand{\TRIGGER}[1]{\STATE \textbf{trigger} #1}
+\newcommand{\SENDMSG}[2]{\STATE \textbf{send} \event{#1} \textbf{to} $#2$}
+\newcommand{\SEND}[3]{\STATE \textbf{send} \eventp{#1}{#2} \textbf{to} $#3$}
+
+\newcommand{\sign}[2]{\ensuremath{\sigma_{#1}(#2)}}
+\newcommand{\cnt}[2]{\ensuremath{\mathrm{count}_{#1}(#2)}}
+\newcommand{\highest}[1]{\ensuremath{\max_{#1}()}}
+\newcommand{\p}[1]{\ensuremath{p(#1)}\xspace}
+\newcommand{\vset}{\ensuremath{\mathcal{V}}\xspace}
+\newcommand{\qset}{\ensuremath{\mathcal{Q}}\xspace}
+\newcommand{\pset}[1]{\ensuremath{\mathcal{P}(#1)}\xspace}
+\newcommand{\maj}{\ensuremath{n_a-t_a}\xspace}
+\newcommand{\smaj}{\ensuremath{n_a-2t_a}\xspace}
+\newcommand{\fd}{\ensuremath{\Diamond S}\xspace}
+
+\newcommand{\lchange}{\emph{LeaderChange}\xspace}
+\newcommand{\singlesrv}{\emph{SingleServer}\xspace}
+\newcommand{\wforlearn}{\emph{WaitForLearn}\xspace}
+\newcommand{\wformajlrn}{\emph{WaitForMajorityLearn}\xspace}
+\newcommand{\bcastlearn}{\emph{BcastLearn}\xspace}
+\newcommand{\sendacc}{\emph{SendAccept}\xspace}
+\newcommand{\retransacc}{\emph{RetransAccept}\xspace}
+
+\newcommand{\decide}{\event{Decide}\xspace}
+\newcommand{\prepare}{prepare\xspace}
+\newcommand{\promise}{promise\xspace}
+\newcommand{\accept}{accept\xspace}
+\newcommand{\learn}{learn\xspace}
+% \newcommand{\prepare}{\event{Prepare}\xspace}
+% \newcommand{\promise}{\event{Promise}\xspace}
+% \newcommand{\accept}{\event{Accept}\xspace}
+% \newcommand{\learn}{\event{Learn}\xspace}
+\newcommand{\acceptany}{\event{Accept-Any}\xspace}
+\newcommand{\fastaccept}{\event{Fast-Accept}\xspace}
+\newcommand{\verify}{verify()\xspace}
+
+\newcommand{\vrnd}{\ensuremath{\mathit{vrnd}}\xspace}
+\newcommand{\vval}{\ensuremath{\mathit{vval}}\xspace}
+\newcommand{\crnd}{\ensuremath{\mathit{crnd}}\xspace}

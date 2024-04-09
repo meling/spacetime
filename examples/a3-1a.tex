@@ -1,0 +1,41 @@
+%!TEX root = ../paxos-tutorial.tex
+
+\newcommand{\sharedevents}[1]{
+	\advancetime[2]
+	\fail[-1]{/srv1}
+	\fail[-0.8]{/srv2}
+	% \advancetime
+	\newleader{/srv3}
+	\advancetime
+	\msgxloss[width=0.3,label pos=lower]{/srv3}{/srv1}{\acc{m_2,1}}{0.2}
+	\msgxloss[width=0.4]{/srv3}{/srv2}{}{0.2}
+	\advancetime
+	\execbox{/srv3}{/srv3}{$m_2$}{0.3}
+	\msgx[width=0.4,label pos=below dst]{/srv3}{/clt2}{\rep{\state{#1}{3}}}{0.5}
+	\advancetime
+	\drawtimelines
+}
+
+\begin{figure}
+\centering
+\thefontsize
+\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=\thescale]
+	\input{slidefig/2c3s}
+	\input{slidefig/3s-msgpattern}
+
+	\advancetime
+	\msgx[width=0.4]{/srv1}{/srv2}{\acc{m_1,1}}{-0.3}
+	\msgxloss[width=0.3]{/srv1}{/srv3}{}{-0.3}
+	\advancetime
+	\msgx[label pos=lower]{/srv2}{/srv1}{\lrn{m_1}}{0}
+	\advancetime
+	\execbox{/srv1}{/srv1}{$m_1$}{0}
+	\execbox{/srv2}{/srv2}{$m_1$}{0}
+	\msgx{/srv1}{/clt1}{\rep{\state{1}{1}}}{0.3}
+	\msgx{/srv2}{/clt1}{\rep{\state{1}{2}}}{0.6}
+	\sharedevents{2}
+\end{tikzpicture}
+\caption{\label{a3-1a}Problem: \srv3 does not learn about the decision taken by \srv1 and \srv2 prior them crashing, leaving \srv3 open to make an inconsistent decision.}
+\end{figure}
+
+

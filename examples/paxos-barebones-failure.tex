@@ -1,0 +1,27 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+	\initstd
+	\process{/srv3}{\srv{3}}
+	\process{/srv2}{\srv{2}}
+	\leader{/srv1}{\ldr{1}}
+	
+	\advancetime
+	\fail{/srv1}
+	\advancetime
+	\bcastx{\prep{2}}
+	\advancetime[2]
+	\replyx{\prom{2,(0,m)}}
+	\newleader[1]{/srv2}
+	\advancetime[2]
+	\bcastx{\acc{2,m,1}}
+	\advancetime[2]
+	\allxall{\lrn{2,m}}
+
+	\advancetime
+	% \execbox{/srv1}{/srv1}{$m$}{0.3}
+	\execbox{/srv2}{/srv2}{$m$}{0.3}
+	\execbox{/srv3}{/srv3}{$m$}{0.3}
+	\advancetime
+	\drawtimelines

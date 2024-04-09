@@ -1,0 +1,45 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\input{slidefig/2c3s1p}
+	\input{slidefig/3s-msgpattern}
+	% Setting default width to 0.2
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+	\advancetime[2]
+	\msgxloss{/srv1}{/partition}{\acc{m_1,1}}{0}
+	\markintervalstart{/srv1}
+	\markintervalstart{/srv2}
+		\advancetime[2]
+	\drawinterval[pos=above]{/srv1}{}{Retransmit}
+	\msgxloss{/srv1}{/partition}{\acc{m_1,1}}{0}
+	\drawinterval[pos=above]{/srv2}{}{Detection}
+	\markintervalstart{/srv1}
+
+	\falsedetection{/partition}
+	\newleader{/srv2}
+	\advancetime
+
+	\msgx{/srv2}{/srv3}{\acc{m_2,1}}{0}
+	% \msgxloss{/srv2}{/partition}{}{0}
+	\advancetime
+
+	\drawinterval[pos=above]{/srv1}{}{Retransmit}
+	\msgxloss{/srv1}{/partition}{\acc{m_1,1}}{0}
+
+	\msgx[label pos=below src]{/srv3}{/srv2}{\lrn{m_2}}{0}
+	% \msgxloss[width=.2]{/srv3}{/partition}{}{0}
+	\execbox{/srv2}{/srv2}{$m_2$}{0.6}
+	\execbox{/srv3}{/srv3}{$m_2$}{0.9}
+	\advancetime
+
+	\msgx[label pos=below dst]{/srv2}{/clt2}{\rep{\state{2}{2}}}{0}
+	\msgx[label pos=below dst]{/srv3}{/clt2}{\rep{\state{2}{3}}}{0.8}
+	\advancetime
+	\merge{/partition}
+	\advancetime
+	\drawtimelines
+
+% \caption{\label{addserver}Solution: Add another server and use the \wforlearn protocol.}
+% \caption{\label{wformajlrn}Solution \wformajlrn: Wait for a majority of learns before executing the request.}
+

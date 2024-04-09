@@ -1,0 +1,11 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\msgx[width=0.4]{/srv1}{/srv2}{\acc{m_1,1}}{0.5}
+	\msgxloss[width=0.2]{/srv1}{/srv3}{}{0.5}
+	\advancetime[2]
+	\msgx[label pos=lower]{/srv2}{/srv1}{\lrn{m_1}}{-0.5}
+	\msgxloss{/srv2}{/srv3}{}{-0.5}
+	\execbox{/srv1}{/srv1}{$m_1$}{0}
+	\execbox{/srv2}{/srv2}{$m_1$}{0.3}
+	\msgx{/srv1}{/clt1}{\rep{\state{1}{1}}}{0.3}
+	\msgx{/srv2}{/clt1}{\rep{\state{1}{2}}}{0.6}

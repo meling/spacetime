@@ -1,0 +1,10 @@
+%!TEX root = ../paxos-tutorial.tex
+
+% Two servers and two clients
+
+	\advancetime
+	\msgx[width=0.5]{/clt1}{/srv1}{\req{m_1}}{-.5}
+	\msgx[width=0.5]{/clt1}{/srv2}{}{-.5}
+	\advancetime
+	\msgx[width=0.9,label pos=lower]{/clt2}{/srv2}{\req{m_2}}{-1.6}
+	\msgx[width=0.2]{/clt2}{/srv1}{}{-1.6}

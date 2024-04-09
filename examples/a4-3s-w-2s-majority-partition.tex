@@ -1,0 +1,41 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\input{slidefig/2c3s1px}
+	\input{slidefig/3s-msgpattern}
+	% Setting default width to 0.2
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+	\advancetime
+	\markintervalstart{/srv3}
+	\msgxloss{/srv1}{/partition}{\acc{m_1,1}}{0}
+	\msgx[width=.4]{/srv1}{/srv2}{}{0}
+	\advancetime
+	\msgx[label pos=below src]{/srv2}{/srv1}{\lrn{m_1}}{0}
+	\execbox{/srv1}{/srv1}{$m_1$}{0.7}
+	\execbox{/srv2}{/srv2}{$m_1$}{1}
+	\advancetime[2]
+	\drawinterval[pos=above,offset=0.2]{/srv3}{}{Non-majority}
+
+	\msgx[label pos=above dst]{/srv1}{/clt1}{\rep{\state{1}{1}}}{0}
+	\msgx[label pos=above dst]{/srv2}{/clt1}{\rep{\state{1}{2}}}{-0.8}
+
+	\advancetime[2]
+	\msgxloss{/srv1}{/partition}{\acc{m_2,2}}{0}
+	\msgx[width=.4]{/srv1}{/srv2}{}{0}
+	\advancetime
+	\msgx[label pos=below src]{/srv2}{/srv1}{\lrn{m_2}}{0}
+	\execbox{/srv1}{/srv1}{$m_2$}{0.7}
+	\execbox{/srv2}{/srv2}{$m_2$}{1}
+	\advancetime
+
+	\msgx[label pos=below dst]{/srv1}{/clt2}{\rep{\state{12}{1}}}{0.1}
+	\msgx[label pos=below dst]{/srv2}{/clt2}{\rep{\state{12}{2}}}{1}
+	\merge{/partition}
+	\advancetime[2]
+	% \advancetime
+	\drawtimelines
+
+% \caption{\label{addserver}Solution: Add another server and use the \wforlearn protocol.}
+% \caption{\label{wformajlrn}Solution \wformajlrn: Wait for a majority of learns before executing the request.}
+

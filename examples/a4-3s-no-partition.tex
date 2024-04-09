@@ -1,0 +1,36 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\input{slidefig/2c3s}
+	% \input{slidefig/3s-msgpattern}
+	% Setting default width to 0.2
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+	% Hack to avoid height difference between slides
+	\txt[label font=\normalsize,label pos=above]{/clt1}{\color{white}\ev{\state{1}{3}}}
+	\txt[label font=\normalsize,label pos=below]{/clt2}{\color{white}\ev{\state{2}{3}}}
+
+	\advancetime[2]
+	\msgx[width=0.4]{/srv1}{/srv2}{\acc{m_1,1}}{0}
+	\msgx{/srv1}{/srv3}{}{0}
+	\advancetime
+	\msgx[label pos=below src]{/srv2}{/srv1}{\lrn{m_1}}{0.2}
+	\advancetime
+	\execbox{/srv1}{/srv1}{$m_1$}{0}
+	% \msgx[label pos=above dst]{/srv1}{/clt1}{\rep{\state{1}{1}}}{0.5}
+	\execbox{/srv2}{/srv2}{$m_1$}{0.3}
+	\advancetime
+	\msgx[label pos=below src]{/srv3}{/srv1}{\lrn{m_1}}{-0.5}
+	% \msgxloss[width=.2]{/srv3}{/partition}{}{0}
+	\execbox{/srv3}{/srv3}{$m_1$}{0.5}
+	% \advancetime
+	% \msgx[label pos=above dst]{/srv2}{/clt1}{\rep{\state{1}{2}}}{0}
+	% \msgx[label pos=above dst]{/srv3}{/clt1}{\rep{\state{1}{3}}}{0.7}
+	\advancetime
+	\merge{/partition}
+	\advancetime
+	\drawtimelines
+
+% \caption{\label{addserver}Solution: Add another server and use the \wforlearn protocol.}
+% \caption{\label{wformajlrn}Solution \wformajlrn: Wait for a majority of learns before executing the request.}
+

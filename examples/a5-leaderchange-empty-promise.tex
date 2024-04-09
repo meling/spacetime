@@ -1,0 +1,43 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\input{slidefig/2c3s}
+	% \input{slidefig/3s-msgpattern}
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+	
+	% Hack to avoid height difference between slides
+	\txt[label font=\normalsize,label pos=above]{/clt1}{\color{white}\ev{\state{1}{3}}}
+	\txt[label font=\normalsize,label pos=below]{/clt2}{\color{white}\ev{\state{2}{3}}}
+
+	\markintervalstart[0.5]{/srv2}
+	\advancetime
+	\msgxloss[width=0.6]{/srv1}{/srv2}{\acc{m_1,1,\srv1}}{0}
+	\msgx[width=5,controls={0,-2.5}{0,1}]{/srv1}{/srv3}{}{0}
+	
+	\advancetime[2]
+	\drawinterval[pos=above,offset=0.4]{/srv2}{}{False Detection}
+	\msgx{/srv2}{/srv3}{\prep{\srv2}}{0.8}
+	\msgxloss{/srv2}{/srv1}{}{0.8}
+	\advancetime
+	\msgx[label pos=lower]{/srv3}{/srv2}{\prom{-,\srv2}}{0.8}
+	\advancetime
+	\newleader[0.3]{/srv2}
+	\advancetime
+	\txt{/srv3}{Ignore}
+	
+	\msgxloss{/srv2}{/srv1}{}{.5}
+	\msgx{/srv2}{/srv3}{\acc{m_2,1,\srv2}}{.5}
+	\advancetime
+	% \msgx[width=0.3]{/srv3}{/srv1}{}{.5}
+	\msgx[label pos=lower]{/srv3}{/srv2}{\lrn{m_2,\srv2}}{.5}
+	\advancetime
+	\execbox{/srv2}{/srv2}{$m_2$}{.3}
+	\execbox{/srv3}{/srv3}{$m_2$}{.5}
+	\advancetime
+	\msgx[label pos=below dst]{/srv2}{/clt2}{\rep{\state{2}{2}}}{-.3}
+	\msgx[label pos=below dst]{/srv3}{/clt2}{\rep{\state{2}{3}}}{.4}
+	\advancetime
+	\drawtimelines
+
+% \caption{\label{leaderchange1}Solution: Leader change by exchange of \prep and \prom.}
+

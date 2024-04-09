@@ -1,0 +1,17 @@
+%!TEX root = ../paxos-tutorial.tex
+
+% \begin{figure}
+\centering
+\thefontsize
+\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=\thescale]
+	\stdset{msg type font=\thefontsize}
+	\initstd
+	\process{/srv1}{\srv{1}}
+	\process{/clt1}{\clt{1}}
+	\advancetime[2]
+	\msg{/clt1}{/srv1}{Request}{x}
+	% \msg{/srv1}{/clt1}{Reply}{false}
+	\drawtimelines
+\end{tikzpicture}
+% \caption{\label{oneclient}Client/server.}
+% \end{figure}

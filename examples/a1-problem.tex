@@ -1,0 +1,39 @@
+%!TEX root = ../paxos-tutorial.tex
+
+%SOLUTION 1: 
+% Let's use one server as leader.
+% Let it tell the other server what to execute. 
+% The leader sends an Accept message to the other server
+%
+%REDUCTION: Remove the client messages
+%PROBLEM:
+% It can happen that the leader's message is delayed
+% and the order at the two servers become different.
+
+	\input{slidefig/2c2s} % two clients, two servers
+	% \input{slidefig/2s-msgpattern} % two server msg pattern
+
+	% Hack to avoid height difference between slides
+	\txt[label font=\normalsize,label pos=above]{/clt1}{\color{white}\ev{\state{1}{3}}}
+	\txt[label font=\normalsize,label pos=below]{/clt2}{\color{white}\ev{\state{2}{3}}}
+
+	\advancetime[2]
+	% \msgx{/srv1}{/srv2}{\acc{m_x}}{0}
+	\msgx[width=4,controls={0,-1}{0,1}]{/srv1}{/srv2}{\acc{m_2}}{0}
+	\advancetime
+	\execbox{/srv2}{/srv2}{$m_2$}{3.4}
+	\execbox{/srv1}{/srv1}{$m_2$}{0}
+	% \msgx[label pos=lower]{/srv1}{/clt2}{\rep{\state{2}{1}}}{0.3}
+	% \msgx[label pos=lower]{/srv2}{/clt2}{\rep{\state{2}{2}}}{-0.1}
+	\advancetime
+	\msgx{/srv1}{/srv2}{\acc{m_1}}{.2}
+	\execbox{/srv2}{/srv2}{$m_1$}{0.8}
+	\execbox{/srv1}{/srv1}{$m_1$}{1.2}
+	\advancetime
+	% \msgx{/srv1}{/clt1}{\rep{\state{21}{1}}}{.5}
+	% \msgx{/srv2}{/clt1}{\rep{\state{21}{2}}}{.9}
+	\advancetime[2]
+	\drawtimelines
+% \caption{\label{a1-leader}First attempt: Leader (\ldr{1}) sends an accept message to other server telling it the order in which the messages should be processed. It is easy to see that both servers remain consistent and that replies to clients are also consistent. This works fine under our current assumptions of no crashes and no message loss.}
+
+% \caption{\label{a1-leader}Solution \sendacc: Leader (\ldr{1}) sends an accept message to the other server telling it the order in which the messages should be processed.}

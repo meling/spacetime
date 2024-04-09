@@ -1,0 +1,41 @@
+%!TEX root = ../paxos-tutorial.tex
+
+%PROBLEM:
+% If we have message loss we can't continue.
+%SOLUTION:
+% Retransmit after timeout if no Ack message received.
+
+	\input{slidefig/2c2s} % two clients, two servers
+	% \input{slidefig/2s-msgpattern} % two server msg pattern
+
+	\advancetime[2]
+	\msgxloss{/srv1}{/srv2}{\acc{m_2,1}}{0}
+	\markintervalstart{/srv1}
+		\advancetime
+		\execbox{/srv1}{/srv1}{$m_2$}{0}
+		% \msgx[label pos=lower]{/srv1}{/clt2}{\rep{\state{2}{1}}}{0.3}
+		\advancetime[2]
+	\drawinterval[pos=above,offset=0.5]{/srv1}{}{Retransmit}
+
+	\msgx{/srv1}{/srv2}{\acc{m_2,1}}{0}
+	\advancetime
+  \msgx[label pos=below src]{/srv2}{/srv1}{\lrn{m_2}}{0}
+	\advancetime
+	\execbox{/srv2}{/srv2}{$m_2$}{0}
+	% \msgx[label pos=lower]{/srv2}{/clt2}{\rep{\state{2}{2}}}{0.3}
+	\advancetime
+
+	% \msgx{/srv1}{/srv2}{\acc{m_1,2}}{0}
+	\advancetime
+	% \execbox{/srv1}{/srv1}{$m_1$}{-0.2}
+	% \msgx{/srv1}{/clt1}{\rep{\state{21}{1}}}{0.1}
+  % \msgx[label pos=below src]{/srv2}{/srv1}{\lrn{m_1}}{0}
+	\advancetime
+	% \execbox{/srv2}{/srv2}{$m_1$}{-0.1}
+	% \msgx{/srv2}{/clt1}{\rep{\state{21}{2}}}{0.2}
+	\advancetime
+	\drawtimelines
+
+% \caption{\label{a2}Solution \retransacc: Retransmit the \ev{\acc{m_2,1}} message if it does not receive a corresponding \ev{\lrn{m_2}} message.}
+ % This is a simple acknowledgement protocol. It solves the problem with message loss. The servers remain consistent, and only exposes a consistent state towards its clients.}
+

@@ -1,0 +1,37 @@
+%!TEX root = ../paxos-tutorial.tex
+
+\def\alive#1{\evp{Alive}{\srv#1}}
+
+\begin{figure}
+\centering
+\thefontsize
+\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=\thescale]
+	\input{slidefig/2c2s}
+	\input{slidefig/2s-msgpattern}
+	% Setting default width to 0.2
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+  \msgx{/srv1}{/srv2}{\alive{1}}{0}
+ 	\advancetime
+	\markintervalstart{/srv1}
+  \msgxloss{/srv1}{/srv2}{\alive{1}}{1}
+ 	\advancetime[2]
+	\drawinterval[pos=above,offset=0.5]{/srv1}{}{Timeout}
+
+ 	% \advancetime
+    \msgx[label pos=lower]{/srv2}{/srv1}{\alive{2}}{-1.2}
+    \msgxloss[label pos=lower]{/srv2}{/srv1}{\alive{2}}{-0.0}
+
+    \execbox{/srv1}{/srv1}{timeout}{1.2}
+    \execbox{/srv2}{/srv2}{timeout}{1}
+    \advancetime
+    \advancetime
+    \execbox{/srv1}{/srv1}{$m_1$}{0}
+    \execbox{/srv2}{/srv2}{$m_2$}{-0.2}
+    \msgx[label pos=above dst]{/srv1}{/clt1}{\rep{\state{1}{1}}}{0.5}
+    \msgx[label pos=below dst]{/srv2}{/clt2}{\rep{\state{2}{2}}}{0.3}
+    \advancetime[2]
+	\drawtimelines
+\end{tikzpicture}
+\end{figure}

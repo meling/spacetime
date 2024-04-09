@@ -1,0 +1,11 @@
+%!TEX root = ../paxos-tutorial.tex
+
+% Three servers and two clients, partitioned
+
+	\initstd
+	\process{/clt2}{\clt{2}}
+	\process{/srv3}{\srv{3}}
+	\process{/srv2}{\srv{2}}
+	\partitionline{/partition}{Partition}
+	\leader{/srv1}{\ldr{1}}
+	\process{/clt1}{\clt{1}}

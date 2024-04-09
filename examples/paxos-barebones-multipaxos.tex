@@ -1,0 +1,25 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+	\input{slidefig/3s}
+	\advancetime
+	\bcast{\acc{1,m_2,1}}
+	\advancetime[2]
+	\allxall{\lrn{1,m_2}}
+	\advancetime
+	\execbox{/srv1}{/srv1}{$m_2$}{0.3}
+	\execbox{/srv2}{/srv2}{$m_2$}{0.3}
+	\execbox{/srv3}{/srv3}{$m_2$}{0.3}
+	% \advancetime
+	\advancetime
+	\bcast{\acc{1,m_1,2}}
+	\advancetime[2]
+	\allxall{\lrn{1,m_1}}
+
+	\advancetime
+	\execbox{/srv1}{/srv1}{$m_1$}{0.3}
+	\execbox{/srv2}{/srv2}{$m_1$}{0.3}
+	\execbox{/srv3}{/srv3}{$m_1$}{0.3}
+	\advancetime
+	\drawtimelines

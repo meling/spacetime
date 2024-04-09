@@ -1,0 +1,18 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\initstd
+	\process{/clt2}{\clt{2}}
+	\process{/srv1}{\srv{\textbf{1}}}
+	\process{/clt1}{\clt{1}}
+	\advancetime
+	\msgx[label pos=lower]{/clt2}{/srv1}{m_2}{0}
+	\execbox{/srv1}{/srv1}{$m_2$}{0.6}
+	\msgx{/clt1}{/srv1}{\req{m_1}}{0.8}
+	\advancetime
+	\execbox{/srv1}{/srv1}{$m_1$}{0.4}
+	\msgx[label pos=lower]{/srv1}{/clt2}{\rep{\state{2}{\textbf{1}}}}{-.1}
+	\msgx{/srv1}{/clt1}{\rep{\state{21}{\textbf{1}}}}{.8}
+	\advancetime[2]
+	\drawtimelines
+
+% \caption{\label{a0}Solution \singlesrv: A single server can order and process requests from several clients.}

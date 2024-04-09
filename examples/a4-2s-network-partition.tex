@@ -1,0 +1,38 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\input{slidefig/2c2s1p}
+	\input{slidefig/2s-msgpattern}
+	% Setting default width to 0.2
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+	\advancetime
+	\msgxloss{/srv1}{/partition}{\acc{m_1,1}}{0}
+	\markintervalstart{/srv1}
+	\markintervalstart{/srv2}
+		\advancetime[2]
+	\drawinterval[pos=above]{/srv1}{}{Retransmit}
+
+	\msgxloss{/srv1}{/partition}{\acc{m_1,1}}{0}
+	\markintervalstart{/srv1}
+		\advancetime[2]
+	\drawinterval[pos=above]{/srv1}{}{Detection}
+	\drawinterval[pos=below]{/srv2}{}{Detection}
+
+	\drawmark{/srv1}{}
+	\falsedetection{/partition}
+	\newleader{/srv2}
+	% \drawmark{/srv2}{}
+
+	\advancetime
+	\execbox{/srv1}{/srv1}{$m_1$}{0}
+	\execbox{/srv2}{/srv2}{$m_2$}{0}
+	\msgx[label pos=above dst]{/srv1}{/clt1}{\rep{\state{1}{1}}}{0.4}
+	\msgx[label pos=below dst]{/srv2}{/clt2}{\rep{\state{2}{2}}}{0.4}
+	\advancetime
+	\merge{/partition}
+	\advancetime
+	\drawtimelines
+
+% \caption{\label{partition}Problem: Our \singlesrv protocol can make progress in separate partitions, but it will lead to inconsistencies.}
+

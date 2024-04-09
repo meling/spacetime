@@ -1,0 +1,43 @@
+%!TEX root = ../paxos-tutorial.tex
+
+%PROBLEM:
+% If the leader crashes, the other server will wait
+% indefinitely for an Accept or Learn message.
+%PROBLEM2:
+% The leader may have sent a reply to C_1, without
+% ensuring that S_2 has learned about the ordering
+% message (Accept, m_1, 1).
+%SOLUTION:
+% We adopt the rule: If the leader crashes the other
+% server continues to serve clients following the
+% SingleServer protocol (Fig.1)
+
+	\input{slidefig/2c2s} % two clients, two servers
+	\input{slidefig/2s-msgpattern} % two server msg pattern
+
+	\msgx{/srv1}{/srv2}{\acc{m_1,1}}{0}
+	\advancetime
+	\execbox{/srv1}{/srv1}{$m_1$}{0}
+	\execbox{/srv2}{/srv2}{$m_1$}{0.2}
+	\msgx{/srv1}{/clt1}{\rep{\state{1}{1}}}{.3}
+	\msgx{/srv2}{/clt1}{\rep{\state{1}{2}}}{.6}
+	\advancetime[2]
+
+	% \drawdash{/srv1}{/srv2}
+	% \fail{/srv1}
+	% \advancetime
+	% \drawmark{/srv2}{SingleSrv}
+	\fail{/srv1}
+	\advancetime
+	\newleader{/srv2}
+	\advancetime
+	% \msgxloss[label pos=below src]{/srv2}{/srv1}{\acc{m_2,1}}{0}
+
+	% \advancetime
+	\execbox{/srv2}{/srv2}{$m_2$}{0}
+	\msgx[label pos=below dst]{/srv2}{/clt2}{\rep{\state{12}{2}}}{0.5}
+	\advancetime
+	\drawtimelines
+
+% \caption{\label{a3-0a}Problem: The leader crashes after sending reply to client \clt1, without ensuring that \srv2 has learned about the ordering message, \ev{\acc{m_1,1}}.}
+

@@ -1,0 +1,23 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\input{slidefig/2c2s-noleader}
+
+	\msgx[width=0.5,label pos=lower]{/clt2}{/srv2}{\req{m_2}}{.3}
+	\msgx[width=0.4]{/clt2}{/srv1}{}{.3}
+	\execbox{/srv1}{/srv1}{$m_2$}{1.1}
+	\execbox{/srv2}{/srv2}{$m_2$}{1.1}
+	\msgx[label pos=lower]{/srv2}{/clt2}{\rep{\state{2}{2}}}{1.4}
+	\msgx[label pos=lower]{/srv1}{/clt2}{\rep{\state{2}{1}}}{1.7}
+	\advancetime[2]
+
+	\msgx[width=0.5]{/clt1}{/srv1}{\req{m_1}}{.3}
+	\msgx[width=0.4]{/clt1}{/srv2}{}{.3}
+	\execbox{/srv1}{/srv1}{$m_1$}{1.1}
+	\execbox{/srv2}{/srv2}{$m_1$}{1.1}
+	\msgx{/srv1}{/clt1}{\rep{\state{21}{1}}}{1.4}
+	\msgx{/srv2}{/clt1}{\rep{\state{21}{2}}}{1.8}
+	\advancetime[2]
+	\advancetime
+
+	\drawtimelines
+

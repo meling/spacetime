@@ -1,0 +1,48 @@
+%!TEX root = ../paxos-tutorial.tex
+
+\begin{figure}
+\centering
+\thefontsize
+\begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=\thescale]
+	\input{slidefig/2c3s}
+	\input{slidefig/3s-msgpattern}
+	% Setting default width to 0.2
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+    \advancetime
+    \msgx[width=0.4]{/srv1}{/srv2}{\alive{1}}{0}
+    \msgx{/srv1}{/srv3}{}{0}
+    \msgx[label pos=lower]{/srv2}{/srv1}{\alive{2}}{0.7}
+    \msgx{/srv2}{/srv3}{}{0.7}
+    \msgx[label pos=lower]{/srv3}{/srv1}{\alive{3}}{1.4}
+    \msgx[width=0.4]{/srv3}{/srv2}{}{1.4}
+    
+    \advancetime[2]
+    \msgxloss[width=0.4]{/srv1}{/srv2}{\alive{1}}{0}
+    \msgx{/srv1}{/srv3}{}{0}
+    \msgxloss[label pos=lower]{/srv2}{/srv1}{\alive{2}}{0.7}
+    \msgx{/srv2}{/srv3}{}{0.7}
+    \msgx[label pos=lower]{/srv3}{/srv1}{\alive{3}}{1.4}
+    \msgx[width=0.4]{/srv3}{/srv2}{}{1.4}
+
+    \advancetime[2]
+    \execbox{/srv1}{/srv1}{timeout}{0.5}
+    \execbox{/srv2}{/srv2}{timeout}{0.2}
+    \msgx[width=3,controls={0,1}{0,-1}]{/srv2}{/srv1}{}{0.5}
+    \msgx[width=0.3]{/srv2}{/srv3}{\acc{m_2,1}}{0.5}
+    \advancetime[2]
+
+    \msgxloss[width=0.3,label pos=lower]{/srv3}{/srv1}{\lrn{m_2}}{-0.7}
+    \msgx[width=0.4]{/srv3}{/srv2}{}{-0.7}
+    \execbox{/srv2}{/srv2}{$m_2$}{0}
+    \execbox{/srv3}{/srv3}{$m_2$}{0}
+
+	\msgx[label pos=below dst]{/srv2}{/clt2}{\rep{\state{2}{2}}}{0.7}
+	\msgx[label pos=below dst]{/srv3}{/clt2}{\rep{\state{2}{3}}}{0.3}
+
+	\advancetime[2]
+	\drawtimelines
+\end{tikzpicture}
+\end{figure}
+

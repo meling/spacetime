@@ -1,0 +1,62 @@
+%!TEX root = ../paxos-tutorial.tex
+
+% \tiny
+% \begin{tikzpicture}[>=stealth,x=1cm,y=1cm,scale=\thescale]
+	\input{slidefig/2c5s}
+\def\ma{0.4}
+\def\mb{0.2}
+
+	\msgx[width=.5]{/clt1}{/srv1}{\req{m_1}}{\ma}
+	\msgx[width=.7]{/clt1}{/srv2}{}{\ma}
+	\msgx[width=.7]{/clt1}{/srv3}{}{\ma}
+	\msgx[width=.7]{/clt1}{/srv4}{}{\ma}
+	\msgx[width=.7]{/clt1}{/srv5}{}{\ma}
+	\msgx[width=.25]{/clt2}{/srv1}{}{\mb}
+	\msgx[width=.35]{/clt2}{/srv2}{}{\mb}
+	\msgx[width=.45]{/clt2}{/srv3}{}{\mb}
+	\msgx[width=.55]{/clt2}{/srv4}{}{\mb}
+	\msgx[width=.65,label pos=lower]{/clt2}{/srv5}{\req{m_2}}{\mb}
+	\advancetime
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+
+	\advancetime
+	
+	\msgx[width=0.7]{/srv1}{/srv5}{\acc{m_1,1,rnd(1)}}{0}
+	\msgxloss[width=0.7]{/srv1}{/srv3}{}{0}
+	\msgxloss[width=0.7]{/srv1}{/srv4}{}{0}
+	\msgxloss[width=0.7]{/srv1}{/srv2}{}{0}
+	\advancetime
+	\fail{/srv1}
+	\advancetime
+	\msgx[width=0.7]{/srv2}{/srv3}{\prep{rnd(2)}}{0}
+	\msgx[width=0.7]{/srv2}{/srv4}{}{0}
+	\msgxloss[width=0.7]{/srv2}{/srv5}{}{0}
+	\advancetime
+	\msgx[width=0.7,label pos=lower]{/srv4}{/srv2}{\prom{\_,rnd(2)}}{0}
+	\msgx[width=0.7,label pos=lower]{/srv3}{/srv2}{}{0}
+	\advancetime
+	\msgx[width=0.7]{/srv2}{/srv3}{\acc{m_2,1,rnd(2)}}{0}
+	\msgx[width=0.7]{/srv2}{/srv4}{}{0}
+	\advancetime
+	\msgxloss[width=0.7,label pos=lower]{/srv4}{/srv2}{\lrn{m_2,rnd(2)}}{0}
+	\msgxloss[width=0.7,label pos=lower]{/srv4}{/srv3}{}{0}
+	\msgxloss[width=0.7,label pos=lower]{/srv3}{/srv2}{\lrn{m_2,rnd(2)}}{0}
+	\msgxloss[width=0.7,label pos=lower]{/srv3}{/srv4}{}{0}
+	\advancetime[2]
+	\fail{/srv2}
+	\msgx[width=0.7]{/srv3}{/srv4}{\prep{rnd(3)}}{0}
+	\msgx[width=0.7]{/srv3}{/srv5}{}{0}
+	\advancetime
+	\msgx[width=0.7,label pos=lower]{/srv4}{/srv3}{\prom{(m_2,rnd(2)),rnd(3)}}{0}
+	\msgx[width=0.7,label pos=lower]{/srv5}{/srv3}{\prom{(m_1,rnd(1)),rnd(3)}}{0}
+	\advancetime
+	\msgx[width=0.7]{/srv3}{/srv4}{\acc{m_2,1,rnd(3)}}{0}
+	\msgx[width=0.7]{/srv3}{/srv5}{}{0}
+	\advancetime
+	
+	
+
+% 	\advancetime
+	\drawtimelines
+% \end{tikzpicture}

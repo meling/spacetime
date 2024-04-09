@@ -1,0 +1,49 @@
+%!TEX root = ../paxos-tutorial.tex
+
+	\stdset{partition line offset=3}
+	\input{slidefig/2c3s1p}
+	% \input{slidefig/3s-msgpattern}
+	\pgfkeys{/mystyle/.style={/std/msg/width=0.2}}
+	\pgfkeys{/mystyle}
+	
+	% Hack to avoid height difference between slides
+	\txt[label font=\normalsize,label pos=above]{/clt1}{\color{white}\ev{\state{1}{3}}}
+	\txt[label font=\normalsize,label pos=below]{/clt2}{\color{white}\ev{\state{2}{3}}}
+	
+%Start Partition
+	\markintervalstart[0.5]{/srv2}
+	\advancetime
+	\msgxloss[width=0.6]{/srv1}{/partition}{\acc{1,m_1,1}}{0}
+	\msgx{/srv1}{/srv3}{}{0}
+	\msgxloss[label pos=lower]{/srv3}{/srv2}{\lrn{1,m_1}}{0.7}
+	\execbox{/srv3}{/srv3}{$m_1$}{1.9}
+	% \msgx[label pos=above dst]{/srv3}{/clt1}{\state{1}{3}}{2.4}
+	
+	\advancetime[2]
+	\drawinterval[pos=above,offset=0.4]{/srv2}{}{Timeout}
+	% \msgx{/srv2}{/srv3}{\evp{Prep}{2}}{0.8}
+	\advancetime
+	% \msgx[label pos=lower]{/srv3}{/srv2}{\prom{2}}{0.6}
+	\advancetime
+	% \newleader[0.3]{/srv2}
+	\advancetime
+
+	% \msgx{/srv2}{/srv3}{\acc{2,m_1,1}}{0.5}
+	\advancetime
+	% \msgxloss[label pos=lower]{/srv3}{/srv2}{\lrn{2,m_1}}{0}
+	\advancetime
+	% \execbox{/srv3}{/srv3}{noop}{0.4}
+	\merge{/partition}
+
+	\advancetime
+	\fail[.5]{/srv3}
+	% \msgx[label pos=lower]{/srv2}{/srv1}{\acc{2,m_1,1}}{-0.4}
+	% \msgx{/srv1}{/srv2}{\lrn{2,m_1}}{0.5}
+	% \execbox{/srv1}{/srv1}{$m_1$}{1}
+	% \execbox{/srv2}{/srv2}{$m_1$}{1.2}
+
+	\advancetime[2]
+	\drawtimelines
+
+% \caption{\label{leaderchange2}Solution \lchange: Previous leader (\srv1) sent accept for $m_1$, but only \srv3 executed it. During leader change, \srv3 must tell the new leader about this execution in its \ev{\prom{m_1,\srv2}} message.}
+

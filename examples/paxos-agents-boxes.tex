@@ -1,0 +1,30 @@
+%!TEX root = ../paxos-tutorial.tex
+
+\def\x{0.5}
+\def\X{1}
+
+\tikzstyle{surround} = [thick,draw=black,rounded corners=2mm]
+\tikzstyle{operator} = [draw,fill=white,minimum size=1.5em] 
+\tikzstyle{gperator} = [draw,fill=green!20,minimum size=1.5em] 
+
+\draw[operator] (1,0.6)    circle [radius=.7cm] node (p1) {Proposer};
+\draw[operator] (1,2.6+\x) circle [radius=.7cm] node (p2) {Proposer};
+\draw[gperator] (1,4.6+\X) circle [radius=.7cm] node (p3) {Proposer};
+
+\draw[operator] (4,0)    rectangle node {Acceptor} (5.5,1.2);
+\draw[operator] (4,2+\x) rectangle node {Acceptor} (5.5,3.2+\x);
+\draw[operator] (4,4+\X) rectangle node {Acceptor} (5.5,5.2+\X);
+
+\draw (8.5,0.6)    node[operator,shape aspect=1,diamond,draw] (l1) {Learner};
+\draw (8.5,2.6+\x) node[operator,shape aspect=1,diamond,draw] (l2) {Learner};
+\draw (8.5,4.6+\X) node[operator,shape aspect=1,diamond,draw] (l3) {Learner};
+
+\begin{pgfonlayer}{background}
+\node[surround,fill=blue!10] (background) [fit = (p1) (l1)] {};
+\end{pgfonlayer}
+\begin{pgfonlayer}{background}
+\node[surround,fill=blue!20] (background) [fit = (p2) (l2)] {};
+\end{pgfonlayer}
+\begin{pgfonlayer}{background}
+\node[surround,fill=blue!30] (background) [fit = (p3) (l3)] {};
+\end{pgfonlayer}
